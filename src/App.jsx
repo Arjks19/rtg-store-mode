@@ -775,7 +775,9 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom, onVi
           >
             {justSaved ? "✓ Saved!" : isSaved ? "✓ Saved" : "♡ Save"}
           </button>
-          <button style={{ ...s.btn, flex: 1 }}>Add to Cart</button>
+          <button style={{ ...s.btn, flex: 1 }} onClick={handleSave}>
+            {isSaved || justSaved ? "✓ In Your Room" : "Add to Cart"}
+          </button>
         </div>
 
         <button
