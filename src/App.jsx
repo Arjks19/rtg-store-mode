@@ -75,6 +75,8 @@ const PRODUCTS = {
 
 const SCAN_SEQUENCE = ["RTG-001", "RTG-002", "RTG-003"];
 
+const BARCODE_BARS = [3, 1, 2, 1, 4, 2, 1, 3, 1, 1, 2, 4, 1, 2, 3, 1, 1, 4, 2, 1, 3, 2, 1, 1];
+
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const s = {
   screen: {
@@ -413,7 +415,7 @@ function ScannerScreen({ onBack, onScanned, scanIndex }) {
         }}
       >
         <button style={{ ...s.backBtn, color: "#fff" }} onClick={onBack}>←</button>
-        <span style={{ ...s.headerTitle, color: "#fff" }}>Scan Tag</span>
+        <span style={{ ...s.headerTitle, color: "#fff" }}>Scan Barcode</span>
       </div>
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 24 }}>
@@ -421,19 +423,33 @@ function ScannerScreen({ onBack, onScanned, scanIndex }) {
         <div
           style={{
             width: "100%",
-            maxWidth: 300,
-            aspectRatio: "1",
+            maxWidth: 320,
+            height: 160,
             position: "relative",
             marginBottom: 32,
           }}
         >
-          <div style={{ position: "absolute", inset: 0, background: "#222", borderRadius: 16, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "absolute", inset: 0, background: "#222", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
             {found ? (
-              <div style={{ fontSize: 60, animation: "pulse 0.3s ease" }}>✅</div>
+              <div style={{ fontSize: 52, animation: "pulse 0.3s ease" }}>✅</div>
             ) : (
-              <div style={{ ...s.mono, fontSize: 12, color: "#555", textAlign: "center" }}>
-                {scanning ? "Reading tag..." : "Point at QR code"}
-              </div>
+              <>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 44 }}>
+                  {BARCODE_BARS.map((w, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: w,
+                        height: "100%",
+                        background: "#555",
+                      }}
+                    />
+                  ))}
+                </div>
+                <div style={{ ...s.mono, fontSize: 12, color: "#555", textAlign: "center" }}>
+                  {scanning ? "Reading barcode..." : "Position barcode in frame"}
+                </div>
+              </>
             )}
           </div>
 
@@ -458,8 +474,8 @@ function ScannerScreen({ onBack, onScanned, scanIndex }) {
             <div
               style={{
                 position: "absolute",
-                left: "10%",
-                right: "10%",
+                left: "6%",
+                right: "6%",
                 height: 2,
                 background: RTG_RED,
                 boxShadow: `0 0 8px ${RTG_RED}`,
@@ -485,15 +501,15 @@ function ScannerScreen({ onBack, onScanned, scanIndex }) {
         )}
 
         <div style={{ color: "#555", fontSize: 12, marginTop: 20, textAlign: "center", lineHeight: 1.6 }}>
-          Hold the camera steady over the<br />Quick Response code on the product tag
+          Hold the camera steady over the<br />barcode on the product tag
         </div>
       </div>
 
       <style>{`
         @keyframes scanline {
-          0% { top: 15%; }
-          50% { top: 80%; }
-          100% { top: 15%; }
+          0% { top: 12%; }
+          50% { top: 82%; }
+          100% { top: 12%; }
         }
       `}</style>
     </div>
