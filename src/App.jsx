@@ -224,7 +224,8 @@ function NavBar({ label, onBack, right }) {
 }
 
 // ─── Product thumbnail (real photo with emoji fallback) ───────────────────────
-function Thumb({ product, size, fontSize, onClick }) {
+function Thumb({ product, color, size, fontSize, onClick }) {
+  const src = productImage(product, color);
   return (
     <div
       onClick={onClick}
@@ -241,9 +242,10 @@ function Thumb({ product, size, fontSize, onClick }) {
         cursor: onClick ? "pointer" : undefined,
       }}
     >
-      {productImage(product) ? (
+      {src ? (
         <img
-          src={productImage(product)}
+          key={color}
+          src={src}
           alt={product.name}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
           onError={(e) => {
@@ -592,7 +594,7 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom }) {
 
   const handleSave = () => {
     if (!isSaved) {
-      onSave(productId);
+      onSave(productId, selectedColor);
       setJustSaved(true);
       setTimeout(() => setJustSaved(false), 2000);
     }
@@ -797,9 +799,10 @@ function MyRoomScreen({ savedItems, onBack, onRemove, onViewProduct }) {
                   gap: 12,
                 }}
               >
-                <Thumb product={item} size={60} fontSize={36} onClick={() => onViewProduct(item.id)} />
+                <Thumb product={item} color={item.selectedColor} size={60} fontSize={36} onClick={() => onViewProduct(item.id)} />
                 <div style={{ flex: 1, cursor: "pointer" }} onClick={() => onViewProduct(item.id)}>
                   <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{item.name}</div>
+                  <div style={{ fontSize: 12, color: "#8A8A8A", marginBottom: 2 }}>{item.selectedColor}</div>
                   <div style={{ fontSize: 13, color: RTG_RED, fontWeight: 700 }}>
                     ${item.price.toLocaleString()}
                   </div>
@@ -955,10 +958,10 @@ export default function App() {
     go("product");
   };
 
-  const handleSave = (productId) => {
+  const handleSave = (productId, selectedColor) => {
     const p = PRODUCTS[productId];
     if (!savedItems.some((i) => i.id === productId)) {
-      setSavedItems((prev) => [...prev, p]);
+      setSavedItems((prev) => [...prev, { ...p, selectedColor }]);
       // Show push notif after 3s to simulate re-engagement
       if (savedItems.length === 0) {
         setTimeout(() => setShowNotif(true), 3000);
