@@ -9,27 +9,20 @@ npm install
 npm start
 ```
 
-Then open http://localhost:3000 in your browser.
+Then open http://localhost:5173 in your browser.
 
 ## Demo Flow
 
-1. **Store Entry** — App detects you're in a Rooms To Go location and prompts Store Mode
-2. **Store Home** — Tap "Scan a Product Tag" to begin
-3. **Scanner** — Tap the scan button; simulates a real QR scan with animation (resolves in ~1.8s)
-4. **Product Detail** — See price, real-time availability, color options, and "Complete the Room" suggestions
-5. **Save to Room** — Tap "Save" to add to your persistent room list
-6. **Push Notification** — After saving your first item, a re-engagement notification appears after 3 seconds
-7. **My Room** — View all saved items, running total, and share link
-
-## Demo Tips
-
-- Scan multiple times to see different products cycle through
-- Save 2–3 items then open "My Room" to show the full list and total
-- Tap the push notification when it appears to show the re-engagement flow
-- Use "Share Room with Partner" to demo the collaborative purchase flow
+1. Store Entry — App detects you're in a Rooms To Go location
+2. Store Home — Tap "Scan a Product Tag" to begin
+3. Scanner — Tap to scan; simulates a QR scan with animation
+4. Product Detail — Price, availability, colors, Complete the Room suggestions
+5. Save to Room — Tap Save to add to your persistent room list
+6. Push Notification — Appears after saving first item
+7. My Room — View all saved items, running total, and share link
 
 ## Built With
 
 - React 18
+- Vite
 - Claude Code
-- Zero external dependencies beyond React
