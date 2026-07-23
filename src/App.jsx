@@ -588,7 +588,7 @@ function ScannerScreen({ onBack, onScanned, scanIndex }) {
 }
 
 // ─── Screen 4: Product Detail ─────────────────────────────────────────────────
-function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom, onViewProduct }) {
+function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom, onViewProduct, onScanAnother }) {
   const p = PRODUCTS[productId];
   const [selectedColor, setSelectedColor] = useState(p.colors[0]);
   const isSaved = savedItems.some((i) => i.id === productId);
@@ -777,6 +777,13 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom, onVi
           </button>
           <button style={{ ...s.btn, flex: 1 }}>Add to Cart</button>
         </div>
+
+        <button
+          style={{ ...s.btnOutline, borderRadius: 12, marginTop: 10 }}
+          onClick={onScanAnother}
+        >
+          📷 &nbsp; Scan Another Product
+        </button>
       </div>
     </div>
   );
@@ -1151,6 +1158,7 @@ export default function App() {
             savedItems={savedItems}
             onViewRoom={() => go("room")}
             onViewProduct={(id) => { setCurrentProduct(id); go("product"); }}
+            onScanAnother={() => go("scanner")}
           />
         )}
         {screen === "room" && (
