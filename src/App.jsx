@@ -14,8 +14,14 @@ const PRODUCTS = {
     name: "Cindy Crawford Bellingham Sectional",
     price: 1299,
     emoji: "🛋️",
-    image:
-      "https://assets.roomstogo.com/v2/37469880_3d-s-lr-hmri-8960-metropolisway-charcoal-sec-raf-ang_primary-view_hq_image-item.webp?cache-id=efaab5f1fef8dccf1e68825b39930d9e&w=1920&q=80",
+    images: {
+      Charcoal:
+        "https://assets.roomstogo.com/v2/37469880_3d-s-lr-hmri-8960-metropolisway-charcoal-sec-raf-ang_primary-view_hq_image-item.webp?cache-id=efaab5f1fef8dccf1e68825b39930d9e&w=1920&q=80",
+      Ivory:
+        "https://assets.roomstogo.com/product/cindy-crawford-home-metropolis-way-platinum-textured-3-pc-sectional-with-cuddler_1208975P_image-item?cache-id=4b7cc06bec796c375eb4314cbe70361f&w=1920&q=80",
+      "Slate Blue":
+        "https://assets.roomstogo.com/product/cindy-crawford-home-metropolis-way-slate-3-pc-sectional_1098972P_image-item?cache-id=b79555661530e598fb3b2eed9d6ed85a&w=1920&q=80",
+    },
     category: "Living Room",
     colors: ["Charcoal", "Ivory", "Slate Blue"],
     inStock: true,
@@ -26,8 +32,14 @@ const PRODUCTS = {
     name: "Platform Bed Frame — King",
     price: 849,
     emoji: "🛏️",
-    image:
-      "https://assets.roomstogo.com/product/natoma-brown-king-platform-bed_84200042_image-item?cache-id=97b094d4eaf8d8897512081a49962bee&w=1920&q=80",
+    images: {
+      Espresso:
+        "https://assets.roomstogo.com/product/natoma-brown-king-platform-bed_84200042_image-item?cache-id=97b094d4eaf8d8897512081a49962bee&w=1920&q=80",
+      White:
+        "https://assets.roomstogo.com/v2/45840588_ot-acc-84723177-bonariden_primary-view_hq_image-item.webp?cache-id=1815bfe2c855a354a73b725bb407384c&w=1920&q=80",
+      Grey:
+        "https://assets.roomstogo.com/product/natoma-gray-king-platform-bed_84200054_image-item?cache-id=c0ecdd39d88dccde630cbb6f04fe61ff&w=1920&q=80",
+    },
     category: "Bedroom",
     colors: ["Espresso", "White", "Grey"],
     inStock: true,
@@ -38,8 +50,12 @@ const PRODUCTS = {
     name: "Lexington Coffee Table",
     price: 349,
     emoji: "🪵",
-    image:
-      "https://assets.roomstogo.com/v2/51011362_3d-s-lr-alek-825-walnut-haverhill-ang-ckt-tbl_primary-view_hq_image-item.webp?cache-id=3890399ac3809f2e81df066fcb397f5a&w=1920&q=80",
+    images: {
+      Walnut:
+        "https://assets.roomstogo.com/v2/51011362_3d-s-lr-alek-825-walnut-haverhill-ang-ckt-tbl_primary-view_hq_image-item.webp?cache-id=3890399ac3809f2e81df066fcb397f5a&w=1920&q=80",
+      Black:
+        "https://assets.roomstogo.com/v2/55614152_3d-s-lr-endg-3292-black-slater-ang-ct_primary-view_hq_image-item.webp?cache-id=d1b3d92be221e6ff6636f5a0bc2fd1d8&w=1920&q=80",
+    },
     category: "Living Room",
     colors: ["Walnut", "Black"],
     inStock: true,
@@ -50,8 +66,14 @@ const PRODUCTS = {
     name: "Accent Armchair",
     price: 399,
     emoji: "🪑",
-    image:
-      "https://assets.roomstogo.com/v2/47770641_3d-s-lr-jgwf-457-beige-uptown-ang-chr_primary-view_hq_image-item.webp?cache-id=5d0853acd599cbcd6256b9a787482640&w=1920&q=80",
+    images: {
+      Cream:
+        "https://assets.roomstogo.com/v2/47770641_3d-s-lr-jgwf-457-beige-uptown-ang-chr_primary-view_hq_image-item.webp?cache-id=5d0853acd599cbcd6256b9a787482640&w=1920&q=80",
+      "Forest Green":
+        "https://assets.roomstogo.com/v2/779351_ot-chr-10560426-frostwood_primary-view_hq_image-item.webp?cache-id=5725d06592ec31a621472714ef3939cb&w=1920&q=80",
+      Terracotta:
+        "https://assets.roomstogo.com/v2/42614463_ot-acc-83191723-brumley_primary-view_hq_image-item.webp?cache-id=ad2ba55c0d60526c70a99c32cd3be139&w=1920&q=80",
+    },
     category: "Living Room",
     colors: ["Cream", "Forest Green", "Terracotta"],
     inStock: false,
@@ -62,8 +84,12 @@ const PRODUCTS = {
     name: "6-Drawer Dresser",
     price: 499,
     emoji: "🗄️",
-    image:
-      "https://assets.roomstogo.com/product/learitt-walnut-6-drawer-dresser_84800359_image-item?cache-id=6a4e22d60dc2d0eafba41875ee1dc586&w=1920&q=80",
+    images: {
+      Espresso:
+        "https://assets.roomstogo.com/product/learitt-walnut-6-drawer-dresser_84800359_image-item?cache-id=6a4e22d60dc2d0eafba41875ee1dc586&w=1920&q=80",
+      White:
+        "https://assets.roomstogo.com/product/arlora-white-6-drawer-dresser_30500943_image-item?cache-id=8065d0fd21f8c19c68fd53803c0bb6e3&w=1920&q=80",
+    },
     category: "Bedroom",
     colors: ["Espresso", "White"],
     inStock: true,
@@ -74,14 +100,24 @@ const PRODUCTS = {
     name: "Nightstand Set (2pc)",
     price: 279,
     emoji: "🕯️",
-    image:
-      "https://assets.roomstogo.com/product/sagepark-white-nightstand-set-of-2_30525200_image-item?cache-id=b1ebf67488df10d9c89922128bc5715f&w=1920&q=80",
+    images: {
+      Espresso:
+        "https://assets.roomstogo.com/v2/58793459_s-br-naja-9881-espresso-braxton-ho-shot0595916_primary-view_hq_image-item.webp?cache-id=6ea7921355f86a22f10272d4efbce207&w=1920&q=80",
+      White:
+        "https://assets.roomstogo.com/product/sagepark-white-nightstand-set-of-2_30525200_image-item?cache-id=b1ebf67488df10d9c89922128bc5715f&w=1920&q=80",
+      Grey:
+        "https://assets.roomstogo.com/v2/37566666_s-br-naja-5935-gray-bellante-ho-shot0024833_primary-view_hq_image-item.webp?cache-id=cdca4698b46bcc72ff87fe99a9d7351b&w=1920&q=80",
+    },
     category: "Bedroom",
     colors: ["Espresso", "White", "Grey"],
     inStock: true,
     complements: ["RTG-002"],
   },
 };
+
+function productImage(product, color) {
+  return product.images?.[color] ?? product.images?.[product.colors[0]];
+}
 
 const SCAN_SEQUENCE = ["RTG-001", "RTG-002", "RTG-003"];
 
@@ -205,9 +241,9 @@ function Thumb({ product, size, fontSize, onClick }) {
         cursor: onClick ? "pointer" : undefined,
       }}
     >
-      {product.image ? (
+      {productImage(product) ? (
         <img
-          src={product.image}
+          src={productImage(product)}
           alt={product.name}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
           onError={(e) => {
@@ -601,10 +637,11 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom }) {
             overflow: "hidden",
           }}
         >
-          {p.image ? (
+          {productImage(p, selectedColor) ? (
             <img
-              src={p.image}
-              alt={p.name}
+              key={selectedColor}
+              src={productImage(p, selectedColor)}
+              alt={`${p.name} — ${selectedColor}`}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               onError={(e) => {
                 e.target.style.display = "none";
