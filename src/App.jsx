@@ -8,6 +8,8 @@ const RULE = "#E2E2E2";
 const SUCCESS = "#1A6B3C";
 const SUCCESS_BG = "#E8F5EE";
 
+const money = (n) => `$${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
 const PRODUCTS = {
   "RTG-001": {
     id: "RTG-001",
@@ -781,7 +783,7 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom, onVi
 }
 
 // ─── Screen 5: My Room ────────────────────────────────────────────────────────
-function MyRoomScreen({ savedItems, onBack, onRemove, onViewProduct }) {
+function MyRoomScreen({ savedItems, onBack, onRemove, onViewProduct, onCheckout }) {
   const total = savedItems.reduce((sum, i) => sum + i.price, 0);
   const [notifSent, setNotifSent] = useState(false);
 
@@ -860,7 +862,7 @@ function MyRoomScreen({ savedItems, onBack, onRemove, onViewProduct }) {
               </div>
             </div>
 
-            <button style={{ ...s.btn, marginBottom: 10, borderRadius: 12 }}>
+            <button style={{ ...s.btn, marginBottom: 10, borderRadius: 12 }} onClick={onCheckout}>
               Checkout All Items
             </button>
 
@@ -892,6 +894,125 @@ function MyRoomScreen({ savedItems, onBack, onRemove, onViewProduct }) {
             )}
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Screen 6: Checkout ───────────────────────────────────────────────────────
+function CheckoutRow({ label, value }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+      <span style={{ fontSize: 13, color: "#8A8A8A" }}>{label}</span>
+      <span style={{ fontSize: 13, color: INK, fontWeight: 500 }}>{money(value)}</span>
+    </div>
+  );
+}
+
+function CheckoutScreen({ savedItems, onBack, onDone }) {
+  const [placed, setPlaced] = useState(false);
+
+  const subtotal = savedItems.reduce((sum, i) => sum + i.price, 0);
+  const tax = subtotal * 0.07;
+  const delivery = subtotal > 0 ? 99 : 0;
+  const total = subtotal + tax + delivery;
+
+  if (placed) {
+    return (
+      <div
+        style={{
+          ...s.screen,
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 32,
+          textAlign: "center",
+        }}
+      >
+        <div style={{ fontSize: 56, marginBottom: 20 }}>✅</div>
+        <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Order Placed!</div>
+        <div style={{ fontSize: 14, color: "#8A8A8A", lineHeight: 1.6, marginBottom: 32 }}>
+          Thanks for shopping with Rooms To Go.
+          <br />
+          A confirmation has been sent to your email.
+        </div>
+        <button style={{ ...s.btn, maxWidth: 280, borderRadius: 12 }} onClick={onDone}>
+          Done
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={s.screen}>
+      <NavBar label="Checkout" onBack={onBack} />
+
+      <div style={s.scrollBody}>
+        <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
+          Order Summary
+        </div>
+        {savedItems.map((item) => (
+          <div
+            key={item.id}
+            style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}
+          >
+            <Thumb product={item} color={item.selectedColor} size={48} fontSize={28} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 13, fontWeight: 600 }}>{item.name}</div>
+              <div style={{ fontSize: 12, color: "#8A8A8A" }}>{item.selectedColor}</div>
+            </div>
+            <div style={{ fontSize: 13, fontWeight: 600 }}>${item.price.toLocaleString()}</div>
+          </div>
+        ))}
+
+        <div style={{ height: 1, background: RULE, margin: "16px 0 20px" }} />
+
+        <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
+          Payment Method
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            background: "#fff",
+            border: `1px solid ${RULE}`,
+            borderRadius: 10,
+            padding: "12px 14px",
+            marginBottom: 20,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 20 }}>💳</span>
+            <span style={{ fontSize: 13, fontWeight: 600 }}>Visa •••• 4242</span>
+          </div>
+          <span style={{ fontSize: 12, color: RTG_RED, fontWeight: 600 }}>Change</span>
+        </div>
+
+        <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
+          Payment Breakdown
+        </div>
+        <div
+          style={{
+            background: "#fff",
+            border: `1px solid ${RULE}`,
+            borderRadius: 12,
+            padding: 16,
+            marginBottom: 24,
+          }}
+        >
+          <CheckoutRow label={`Subtotal (${savedItems.length} ${savedItems.length === 1 ? "item" : "items"})`} value={subtotal} />
+          <CheckoutRow label="Estimated Tax" value={tax} />
+          <CheckoutRow label="White Glove Delivery" value={delivery} />
+          <div style={{ height: 1, background: RULE, margin: "10px 0" }} />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 15, fontWeight: 700 }}>Total</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: RTG_RED }}>{money(total)}</span>
+          </div>
+        </div>
+
+        <button style={{ ...s.btn, borderRadius: 12 }} onClick={() => setPlaced(true)}>
+          Place Order — {money(total)}
+        </button>
       </div>
     </div>
   );
@@ -1038,6 +1159,17 @@ export default function App() {
             onBack={goBack}
             onRemove={handleRemove}
             onViewProduct={(id) => { setCurrentProduct(id); go("product"); }}
+            onCheckout={() => go("checkout")}
+          />
+        )}
+        {screen === "checkout" && (
+          <CheckoutScreen
+            savedItems={savedItems}
+            onBack={goBack}
+            onDone={() => {
+              setSavedItems([]);
+              setScreen("home");
+            }}
           />
         )}
       </div>
