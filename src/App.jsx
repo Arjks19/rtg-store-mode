@@ -14,6 +14,8 @@ const PRODUCTS = {
     name: "Cindy Crawford Bellingham Sectional",
     price: 1299,
     emoji: "🛋️",
+    image:
+      "https://assets.roomstogo.com/v2/37469880_3d-s-lr-hmri-8960-metropolisway-charcoal-sec-raf-ang_primary-view_hq_image-item.webp?cache-id=efaab5f1fef8dccf1e68825b39930d9e&w=1920&q=80",
     category: "Living Room",
     colors: ["Charcoal", "Ivory", "Slate Blue"],
     inStock: true,
@@ -549,9 +551,22 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom }) {
             justifyContent: "center",
             fontSize: 72,
             marginBottom: 20,
+            overflow: "hidden",
           }}
         >
-          {p.emoji}
+          {p.image ? (
+            <img
+              src={p.image}
+              alt={p.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              onError={(e) => {
+                e.target.style.display = "none";
+                e.target.parentElement.textContent = p.emoji;
+              }}
+            />
+          ) : (
+            p.emoji
+          )}
         </div>
 
         {/* Product info */}
