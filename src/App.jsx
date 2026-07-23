@@ -26,6 +26,8 @@ const PRODUCTS = {
     name: "Platform Bed Frame — King",
     price: 849,
     emoji: "🛏️",
+    image:
+      "https://assets.roomstogo.com/product/natoma-brown-king-platform-bed_84200042_image-item?cache-id=97b094d4eaf8d8897512081a49962bee&w=1920&q=80",
     category: "Bedroom",
     colors: ["Espresso", "White", "Grey"],
     inStock: true,
@@ -36,6 +38,8 @@ const PRODUCTS = {
     name: "Lexington Coffee Table",
     price: 349,
     emoji: "🪵",
+    image:
+      "https://assets.roomstogo.com/v2/51011362_3d-s-lr-alek-825-walnut-haverhill-ang-ckt-tbl_primary-view_hq_image-item.webp?cache-id=3890399ac3809f2e81df066fcb397f5a&w=1920&q=80",
     category: "Living Room",
     colors: ["Walnut", "Black"],
     inStock: true,
@@ -46,6 +50,8 @@ const PRODUCTS = {
     name: "Accent Armchair",
     price: 399,
     emoji: "🪑",
+    image:
+      "https://assets.roomstogo.com/v2/47770641_3d-s-lr-jgwf-457-beige-uptown-ang-chr_primary-view_hq_image-item.webp?cache-id=5d0853acd599cbcd6256b9a787482640&w=1920&q=80",
     category: "Living Room",
     colors: ["Cream", "Forest Green", "Terracotta"],
     inStock: false,
@@ -56,6 +62,8 @@ const PRODUCTS = {
     name: "6-Drawer Dresser",
     price: 499,
     emoji: "🗄️",
+    image:
+      "https://assets.roomstogo.com/product/learitt-walnut-6-drawer-dresser_84800359_image-item?cache-id=6a4e22d60dc2d0eafba41875ee1dc586&w=1920&q=80",
     category: "Bedroom",
     colors: ["Espresso", "White"],
     inStock: true,
@@ -66,6 +74,8 @@ const PRODUCTS = {
     name: "Nightstand Set (2pc)",
     price: 279,
     emoji: "🕯️",
+    image:
+      "https://assets.roomstogo.com/product/sagepark-white-nightstand-set-of-2_30525200_image-item?cache-id=b1ebf67488df10d9c89922128bc5715f&w=1920&q=80",
     category: "Bedroom",
     colors: ["Espresso", "White", "Grey"],
     inStock: true,
@@ -173,6 +183,41 @@ function NavBar({ label, onBack, right }) {
       )}
       <span style={s.headerTitle}>{label}</span>
       {right}
+    </div>
+  );
+}
+
+// ─── Product thumbnail (real photo with emoji fallback) ───────────────────────
+function Thumb({ product, size, fontSize, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        width: size,
+        height: size,
+        background: WARM,
+        borderRadius: 10,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        overflow: "hidden",
+        cursor: onClick ? "pointer" : undefined,
+      }}
+    >
+      {product.image ? (
+        <img
+          src={product.image}
+          alt={product.name}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          onError={(e) => {
+            e.target.style.display = "none";
+            e.target.parentElement.textContent = product.emoji;
+          }}
+        />
+      ) : (
+        <span style={{ fontSize }}>{product.emoji}</span>
+      )}
     </div>
   );
 }
@@ -342,21 +387,7 @@ function StoreHomeScreen({ savedItems, recentScans, onScan, onViewRoom, onViewPr
                     cursor: "pointer",
                   }}
                 >
-                  <div
-                    style={{
-                      fontSize: 32,
-                      background: WARM,
-                      width: 56,
-                      height: 56,
-                      borderRadius: 10,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {p.emoji}
-                  </div>
+                  <Thumb product={p} size={56} fontSize={32} />
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{p.name}</div>
                     <div style={{ fontSize: 13, color: RTG_RED, fontWeight: 700 }}>
@@ -662,7 +693,7 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom }) {
                   cursor: "pointer",
                 }}
               >
-                <div style={{ fontSize: 28 }}>{cp.emoji}</div>
+                <Thumb product={cp} size={44} fontSize={24} />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 12, fontWeight: 600 }}>{cp.name}</div>
                   <div style={{ fontSize: 12, color: RTG_RED, fontWeight: 600 }}>${cp.price.toLocaleString()}</div>
@@ -729,23 +760,7 @@ function MyRoomScreen({ savedItems, onBack, onRemove, onViewProduct }) {
                   gap: 12,
                 }}
               >
-                <div
-                  onClick={() => onViewProduct(item.id)}
-                  style={{
-                    fontSize: 36,
-                    background: WARM,
-                    width: 60,
-                    height: 60,
-                    borderRadius: 10,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    flexShrink: 0,
-                  }}
-                >
-                  {item.emoji}
-                </div>
+                <Thumb product={item} size={60} fontSize={36} onClick={() => onViewProduct(item.id)} />
                 <div style={{ flex: 1, cursor: "pointer" }} onClick={() => onViewProduct(item.id)}>
                   <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{item.name}</div>
                   <div style={{ fontSize: 13, color: RTG_RED, fontWeight: 700 }}>
