@@ -586,7 +586,7 @@ function ScannerScreen({ onBack, onScanned, scanIndex }) {
 }
 
 // ─── Screen 4: Product Detail ─────────────────────────────────────────────────
-function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom }) {
+function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom, onViewProduct }) {
   const p = PRODUCTS[productId];
   const [selectedColor, setSelectedColor] = useState(p.colors[0]);
   const isSaved = savedItems.some((i) => i.id === productId);
@@ -717,29 +717,46 @@ function ProductScreen({ productId, onBack, onSave, savedItems, onViewRoom }) {
             <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
               Complete the Room
             </div>
-            {complements.map((cp) => (
-              <div
-                key={cp.id}
-                style={{
-                  background: "#fff",
-                  border: `1px solid ${RULE}`,
-                  borderRadius: 10,
-                  padding: "12px 14px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  marginBottom: 8,
-                  cursor: "pointer",
-                }}
-              >
-                <Thumb product={cp} size={44} fontSize={24} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600 }}>{cp.name}</div>
-                  <div style={{ fontSize: 12, color: RTG_RED, fontWeight: 600 }}>${cp.price.toLocaleString()}</div>
+            {complements.map((cp) => {
+              const cpSaved = savedItems.some((i) => i.id === cp.id);
+              return (
+                <div
+                  key={cp.id}
+                  onClick={() => onViewProduct(cp.id)}
+                  style={{
+                    background: "#fff",
+                    border: `1px solid ${RULE}`,
+                    borderRadius: 10,
+                    padding: "12px 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    marginBottom: 8,
+                    cursor: "pointer",
+                  }}
+                >
+                  <Thumb product={cp} size={44} fontSize={24} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600 }}>{cp.name}</div>
+                    <div style={{ fontSize: 12, color: RTG_RED, fontWeight: 600 }}>${cp.price.toLocaleString()}</div>
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!cpSaved) onSave(cp.id, cp.colors[0]);
+                    }}
+                    style={{
+                      fontSize: 12,
+                      color: cpSaved ? SUCCESS : RTG_RED,
+                      fontWeight: 600,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {cpSaved ? "✓ Added" : "+ Add"}
+                  </div>
                 </div>
-                <div style={{ fontSize: 12, color: RTG_RED, fontWeight: 600 }}>+ Add</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -1006,11 +1023,13 @@ export default function App() {
         )}
         {screen === "product" && currentProduct && (
           <ProductScreen
+            key={currentProduct}
             productId={currentProduct}
             onBack={goBack}
             onSave={handleSave}
             savedItems={savedItems}
             onViewRoom={() => go("room")}
+            onViewProduct={(id) => { setCurrentProduct(id); go("product"); }}
           />
         )}
         {screen === "room" && (
